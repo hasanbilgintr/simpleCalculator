@@ -2,13 +2,11 @@ package com.hasanbilgin.calculator
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Switch
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.hasanbilgin.calculator.databinding.ActivityMainBinding
+import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -28,7 +26,9 @@ class MainActivity : AppCompatActivity() {
     var operation: Char = '_'
     var isSecondNum: Boolean = false
     var result: Double = 0.0
-
+    var resultString: String = ""
+    var isHaveDot: Boolean = false
+    var didItEnd: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +61,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun allDeleteOnClick(view: View) {
-        //        processString = ""
-        //        binding.processEdittext.setText(processString)
-        //        resultString = ""
-        //        binding.resultEdittext.setText(resultString)
+        firstNum = ""
+        secondNum = ""
+        operation = '_'
+        isSecondNum = false
+        result = 0.0
+        resultString = ""
+        isHaveDot = false
+        binding.processEdittext.setText("0")
+        binding.resultEdittext.setText("0")
+        //eksik birşeyler var
     }
 
     fun deleteOnclick(view: View) {
@@ -108,7 +114,6 @@ class MainActivity : AppCompatActivity() {
             secondNum += "1"
             binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
         }
-
     }
 
     fun twoOnClick(view: View) {
@@ -215,31 +220,73 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     fun sumOnClick(view: View) {
-        operation = '+'
-        isSecondNum = true
-        binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+        if (!didItEnd) {
+            operation = '+'
+            isSecondNum = true
+            isHaveDot = false
+            binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+        } else {
+            operation = '+'
+            isSecondNum = true
+            isHaveDot = false
+            didItEnd = false
+            firstNum = binding.resultEdittext.text.toString()
+            secondNum = ""
+            binding.processEdittext.setText(firstNum + " " + operation);
+        }
     }
 
     fun subOnClick(view: View) {
-        operation = '-'
-        isSecondNum = true
-        binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+        if (!didItEnd) {
+            operation = '-'
+            isSecondNum = true
+            isHaveDot = false
+            binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+        } else {
+            operation = '-'
+            isSecondNum = true
+            isHaveDot = false
+            didItEnd = false
+            firstNum = binding.resultEdittext.text.toString()
+            secondNum = ""
+            binding.processEdittext.setText(firstNum + " " + operation);
+        }
     }
 
     fun multiplyOnClick(view: View) {
-        operation = 'x'
-        isSecondNum = true
-        binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+        if (!didItEnd) {
+            operation = 'x'
+            isSecondNum = true
+            isHaveDot = false
+            binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+        } else {
+            operation = 'x'
+            isSecondNum = true
+            isHaveDot = false
+            didItEnd = false
+            firstNum = binding.resultEdittext.text.toString()
+            secondNum = ""
+            binding.processEdittext.setText(firstNum + " " + operation);
+        }
     }
 
     fun divOnClick(view: View) {
-        operation = '/'
-        isSecondNum = true
-        binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+        if (!didItEnd) {
+            operation = '/'
+            isSecondNum = true
+            isHaveDot = false
+            binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+        } else {
+            operation = '/'
+            isSecondNum = true
+            isHaveDot = false
+            didItEnd = false
+            firstNum = binding.resultEdittext.text.toString()
+            secondNum = ""
+            binding.processEdittext.setText(firstNum + " " + operation);
+        }
     }
-
 
     fun xSquareOnClick(view: View) {
     }
@@ -251,54 +298,64 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun dotOnClick(view: View) {
-        //        if (!isThereDot) {
-        //            processString = binding.processEdittext.text.toString() + "."
-        //            binding.processEdittext.setText(processString)
-        //            isThereDot = true
-        //        }
+        if (isSecondNum) {
+            if (secondNum != "") {
+                if (!isHaveDot) {
+                    secondNum = secondNum + "."
+                    isHaveDot = true
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+                }
+            }
+        } else {
+            if (firstNum != "") {
+                if (!isHaveDot) {
+                    firstNum = firstNum + "."
+                    isHaveDot = true
+                    binding.processEdittext.setText(firstNum)
+                }
+            }
+        }
+    }
+
+    fun isDouble(double: Double): String {
+        didItEnd = true
+        resultString = (double.toInt()).toString()
+        if (resultString + ".0" == double.toString()) {
+            return resultString
+        } else {
+            return double.toString()
+        }
     }
 
     fun resultOnClick(view: View) {
-        //resultString = binding.processEdittext.text.toString()
-        //result = firstNum.toString().toDouble()
+        //0.1 düzeltildi...+
+        if (!didItEnd) {
+            if (firstNum != "" && secondNum != "") {
+                when (operation) {
+                    '+' -> {
+                        result = (BigDecimal(firstNum) + BigDecimal(secondNum)).toDouble()
+                        binding.resultEdittext.setText(isDouble(result))
+                    }
 
-        //        if (firstNum != null && secondNum != null) {
-        //            when (operation) {
-        //                '+' -> result = (firstNum!! + secondNum!!).toString().toDouble()
-        //                '-' -> result = (firstNum!! - secondNum!!).toString().toDouble()
-        //                '*' -> result = (firstNum!! * secondNum!!).toString().toDouble()
-        //                '/' -> result = (firstNum!! / secondNum!!).toString().toDouble()
-        //                //else -> dayString = ""
-        //            }
-        //            println(result)
-        //            binding.resultEdittext.setText(result.toString())
-        //        }
+                    '-' -> {
+                        result = (BigDecimal(firstNum) - BigDecimal(secondNum)).toDouble()
+                        binding.resultEdittext.setText(isDouble(result))
+                    }
 
+                    'x' -> {
+                        result = (BigDecimal(firstNum) * BigDecimal(secondNum)).toDouble()
+                        binding.resultEdittext.setText(isDouble(result))
+                    }
 
-        if (firstNum != "" && secondNum != "") {
+                    '/' -> {
+                        result = (BigDecimal(firstNum) / BigDecimal(secondNum)).toDouble()
+                        binding.resultEdittext.setText(isDouble(result))
+                    }
 
-            when (operation) {
-                '+' -> {
-                    result = firstNum.toDouble() + secondNum.toDouble()
-                    binding.resultEdittext.setText(result.toString())
+                    '_' -> binding.resultEdittext.setText("Error");
                 }
-
-                '-' -> {
-                    result = firstNum.toDouble() + secondNum.toDouble()
-                    binding.resultEdittext.setText(result.toString())
-                }
-                '*' -> {
-                    result = firstNum.toDouble() + secondNum.toDouble()
-                    binding.resultEdittext.setText(result.toString())
-                }
-                '/' -> {
-                    result = firstNum.toDouble() + secondNum.toDouble()
-                    binding.resultEdittext.setText(result.toString())
-                }
-                '_' -> binding.resultEdittext.setText("Error");
             }
         }
-
 
     }
 }
