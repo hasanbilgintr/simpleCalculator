@@ -14,8 +14,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="25"
+        android:layout_weight="30"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Hesapla"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:layout_weight="5">
+        </TextView>
 
         <EditText
             android:id="@+id/processEdittext"
@@ -306,16 +314,7 @@
             android:layout_weight="10"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/multiplyByMinusOneButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="1dp"
-                android:layout_weight="10"
-                android:onClick="multiplyByMinusOneOnClick"
-                android:padding="0dp"
-                android:text="+ / -"
-                android:textSize="30sp" />
+
 
             <Button
                 android:id="@+id/addZeroButton"
@@ -337,6 +336,16 @@
                 android:onClick="addCoupleZeroOnClick"
                 android:padding="0dp"
                 android:text="00"
+                android:textSize="30sp" />
+            <Button
+                android:id="@+id/threeZeroButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="10"
+                android:onClick="threeZeroButtonOnClick"
+                android:padding="0dp"
+                android:text="000"
                 android:textSize="30sp" />
 
             <Button
