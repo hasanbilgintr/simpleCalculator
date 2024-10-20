@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     var resultString: String = ""
     var isHaveDot: Boolean = false
     var didItEnd: Boolean = false
-    var above: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,304 +31,373 @@ class MainActivity : AppCompatActivity() {
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 
-
     fun allDeleteOnClick(view: View) {
-        firstNum = ""
-        secondNum = ""
-        operation = '_'
-        isSecondNum = false
-        resultString = ""
-        isHaveDot = false
-        didItEnd = false
-        binding.processEdittext.setText("0")
-        binding.resultEdittext.setText("0")
+        try {
+            firstNum = ""
+            secondNum = ""
+            operation = '_'
+            isSecondNum = false
+            resultString = ""
+            isHaveDot = false
+            didItEnd = false
+            binding.processEdittext.setText("0")
+            binding.resultEdittext.setText("0")
+        } catch (e: Exception) {
+        }
     }
 
     fun deleteOnclick(view: View) {
-        if (!didItEnd) {
-            if (!isSecondNum) {
-                firstNum = ""
-                isHaveDot = false
-                didItEnd = false
-                binding.processEdittext.setText("0")
-            } else {
-                secondNum = ""
-                isHaveDot = false
-                didItEnd = false
-                binding.processEdittext.setText(firstNum + " " + operation + " ")
+        try {
+            if (!didItEnd) {
+                if (!isSecondNum) {
+                    firstNum = ""
+                    isHaveDot = false
+                    didItEnd = false
+                    binding.processEdittext.setText("0")
+                } else {
+                    secondNum = ""
+                    isHaveDot = false
+                    didItEnd = false
+                    binding.processEdittext.setText(firstNum + " " + operation + " ")
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 
     fun charDeleteOnClick(view: View) {
-        if (!didItEnd) {
-            if (!isSecondNum) {
-                if (firstNum.length > 1) {
-                    val firstNumLast = firstNum.last()
-                    if (firstNumLast == '.') {
+        try {
+            if (!didItEnd) {
+                if (!isSecondNum) {
+                    if (firstNum.length > 1) {
+                        val firstNumLast = firstNum.last()
+                        if (firstNumLast == '.') {
+                            isHaveDot = false
+                        }
+                        firstNum = firstNum.dropLast(1)
+                        binding.processEdittext.setText(firstNum)
+                    } else {
+                        firstNum = ""
                         isHaveDot = false
+                        binding.processEdittext.setText("0")
                     }
-                    firstNum = firstNum.dropLast(1)
-                    binding.processEdittext.setText(firstNum)
                 } else {
-                    firstNum = ""
-                    isHaveDot = false
-                    binding.processEdittext.setText("0")
-                }
-            } else {
-                if (secondNum.length > 1) {
-                    val secondNumLast = secondNum.last()
-                    if (secondNumLast == '.') {
+                    if (secondNum.length > 1) {
+                        val secondNumLast = secondNum.last()
+                        if (secondNumLast == '.') {
+                            isHaveDot = false
+                        }
+                        secondNum = secondNum.dropLast(1)
+                        binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+                    } else {
+                        secondNum = ""
                         isHaveDot = false
+                        binding.processEdittext.setText(firstNum + " " + operation + " ")
                     }
-                    secondNum = secondNum.dropLast(1)
-                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
-                } else {
-                    secondNum = ""
-                    isHaveDot = false
-                    binding.processEdittext.setText(firstNum + " " + operation + " ")
                 }
             }
+        } catch (e: Exception) {
+
         }
     }
 
     fun addZeroOnClick(view: View) {
-        if (binding.processEdittext.text.toString() != "0") {
-            if (!isSecondNum) {
-                firstNum += "0"
-                binding.processEdittext.setText(firstNum);
-            } else if (secondNum != "") {
-                secondNum += "0"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+        try {
+            if (binding.processEdittext.text.toString() != "0") {
+                if (!isSecondNum) {
+                    firstNum += "0"
+                    binding.processEdittext.setText(firstNum);
+                } else if (secondNum != "") {
+                    secondNum += "0"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
+            } else {
+                binding.processEdittext.setText("0");
             }
-        } else {
-            binding.processEdittext.setText("0");
+        } catch (e: Exception) {
+
         }
     }
 
     fun addCoupleZeroOnClick(view: View) {
-        if (binding.processEdittext.text.toString() != "0") {
-            if (!isSecondNum) {
-                firstNum += "00"
-                binding.processEdittext.setText(firstNum);
-            } else if (secondNum != "") {
-                secondNum += "00"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+        try {
+            if (binding.processEdittext.text.toString() != "0") {
+                if (!isSecondNum) {
+                    firstNum += "00"
+                    binding.processEdittext.setText(firstNum);
+                } else if (secondNum != "") {
+                    secondNum += "00"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 
     fun oneOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "1"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "1"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "1"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "1"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun twoOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "2"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "2"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "2"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "2"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun threeOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "3"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "3"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "3"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "3"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun fourOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "4"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "4"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "4"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "4"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun fiveOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "5"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "5"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "5"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "5"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun sixOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "6"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "6"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "6"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "6"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun sevenOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "7"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "7"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "7"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "7"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun eightOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "8"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "8"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "8"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "8"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun nineOnClick(view: View) {
-        if (!didItEnd) {
-            if (binding.processEdittext.text.toString() == "0") {
-                binding.processEdittext.setText("");
+        try {
+            if (!didItEnd) {
+                if (binding.processEdittext.text.toString() == "0") {
+                    binding.processEdittext.setText("");
+                }
+                if (!isSecondNum) {
+                    firstNum += "9"
+                    binding.processEdittext.setText(firstNum);
+                } else {
+                    secondNum += "9"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
-            if (!isSecondNum) {
-                firstNum += "9"
-                binding.processEdittext.setText(firstNum);
-            } else {
-                secondNum += "9"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
-            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun sumOnClick(view: View) {
-        if (firstNum != "") {
-            if (!didItEnd) {
-                operation = '+'
-                isSecondNum = true
-                isHaveDot = false
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
-            } else {
-                operation = '+'
-                isSecondNum = true
-                isHaveDot = false
-                didItEnd = false
-                firstNum = binding.resultEdittext.text.toString()
-                secondNum = ""
-                binding.processEdittext.setText(firstNum + " " + operation);
+        try {
+            if (firstNum != "") {
+                if (!didItEnd) {
+                    operation = '+'
+                    isSecondNum = true
+                    isHaveDot = false
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+                } else {
+                    operation = '+'
+                    isSecondNum = true
+                    isHaveDot = false
+                    didItEnd = false
+                    firstNum = binding.resultEdittext.text.toString()
+                    secondNum = ""
+                    binding.processEdittext.setText(firstNum + " " + operation);
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 
     fun subOnClick(view: View) {
-        if (firstNum != "") {
-            if (!didItEnd) {
-                operation = '-'
-                isSecondNum = true
-                isHaveDot = false
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
-            } else {
-                operation = '-'
-                isSecondNum = true
-                isHaveDot = false
-                didItEnd = false
-                firstNum = binding.resultEdittext.text.toString()
-                secondNum = ""
-                binding.processEdittext.setText(firstNum + " " + operation);
+        try {
+            if (firstNum != "") {
+                if (!didItEnd) {
+                    operation = '-'
+                    isSecondNum = true
+                    isHaveDot = false
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+                } else {
+                    operation = '-'
+                    isSecondNum = true
+                    isHaveDot = false
+                    didItEnd = false
+                    firstNum = binding.resultEdittext.text.toString()
+                    secondNum = ""
+                    binding.processEdittext.setText(firstNum + " " + operation);
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 
     fun multiplyOnClick(view: View) {
-        if (firstNum != "") {
-            if (!didItEnd) {
-                operation = 'x'
-                isSecondNum = true
-                isHaveDot = false
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
-            } else {
-                operation = 'x'
-                isSecondNum = true
-                isHaveDot = false
-                didItEnd = false
-                firstNum = binding.resultEdittext.text.toString()
-                secondNum = ""
-                binding.processEdittext.setText(firstNum + " " + operation);
+        try {
+            if (firstNum != "") {
+                if (!didItEnd) {
+                    operation = 'x'
+                    isSecondNum = true
+                    isHaveDot = false
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+                } else {
+                    operation = 'x'
+                    isSecondNum = true
+                    isHaveDot = false
+                    didItEnd = false
+                    firstNum = binding.resultEdittext.text.toString()
+                    secondNum = ""
+                    binding.processEdittext.setText(firstNum + " " + operation);
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 
     fun divOnClick(view: View) {
-        if (firstNum != "") {
-            if (!didItEnd) {
-                operation = '/'
-                isSecondNum = true
-                isHaveDot = false
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
-            } else {
-                operation = '/'
-                isSecondNum = true
-                isHaveDot = false
-                didItEnd = false
-                firstNum = binding.resultEdittext.text.toString()
-                secondNum = ""
-                binding.processEdittext.setText(firstNum + " " + operation);
+        try {
+            if (firstNum != "") {
+                if (!didItEnd) {
+                    operation = '/'
+                    isSecondNum = true
+                    isHaveDot = false
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+                } else {
+                    operation = '/'
+                    isSecondNum = true
+                    isHaveDot = false
+                    didItEnd = false
+                    firstNum = binding.resultEdittext.text.toString()
+                    secondNum = ""
+                    binding.processEdittext.setText(firstNum + " " + operation);
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 
@@ -355,119 +423,147 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun xAboveOnClick(view: View) {
-        if (firstNum != "") {
-            if (!didItEnd) {
-                operation = '^'
-                isSecondNum = true
-                isHaveDot = false
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
-            } else {
-                operation = '^'
-                isSecondNum = true
-                isHaveDot = false
-                didItEnd = false
-                firstNum = binding.resultEdittext.text.toString()
-                secondNum = ""
-                binding.processEdittext.setText(firstNum + " " + operation);
+        try {
+            if (firstNum != "") {
+                if (!didItEnd) {
+                    operation = '^'
+                    isSecondNum = true
+                    isHaveDot = false
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+                } else {
+                    operation = '^'
+                    isSecondNum = true
+                    isHaveDot = false
+                    didItEnd = false
+                    firstNum = binding.resultEdittext.text.toString()
+                    secondNum = ""
+                    binding.processEdittext.setText(firstNum + " " + operation);
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 
     fun xSquareOnClick(view: View) {
-        if (!isSecondNum && operation == '_' && firstNum != "") {
-            didItEnd = true
-            binding.processEdittext.setText(firstNum + " * " + firstNum)
-            binding.resultEdittext.setText(isDouble((firstNum.toBigDecimal() * firstNum.toBigDecimal()).toDouble()))
+        try {
+            if (!isSecondNum && operation == '_' && firstNum != "") {
+                didItEnd = true
+                binding.processEdittext.setText(firstNum + " * " + firstNum)
+                binding.resultEdittext.setText(isDouble((firstNum.toBigDecimal() * firstNum.toBigDecimal()).toDouble()))
+            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun xSquareRootOnClick(view: View) {
-        if (!isSecondNum && operation == '_' && firstNum != "") {
-            didItEnd = true
-            binding.processEdittext.setText("√(" + firstNum + ")")
-            binding.resultEdittext.setText(isDouble(Math.sqrt(firstNum.toDouble())))
+        try {
+            if (!isSecondNum && operation == '_' && firstNum != "") {
+                didItEnd = true
+                binding.processEdittext.setText("√(" + firstNum + ")")
+                binding.resultEdittext.setText(isDouble(Math.sqrt(firstNum.toDouble())))
+            }
+        } catch (e: Exception) {
+
         }
     }
 
     fun threeZeroButtonOnClick(view: View) {
-        if (binding.processEdittext.text.toString() != "0") {
-            if (!isSecondNum) {
-                firstNum += "000"
-                binding.processEdittext.setText(firstNum);
-            } else if (secondNum != "") {
-                secondNum += "000"
-                binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+        try {
+            if (binding.processEdittext.text.toString() != "0") {
+                if (!isSecondNum) {
+                    firstNum += "000"
+                    binding.processEdittext.setText(firstNum);
+                } else if (secondNum != "") {
+                    secondNum += "000"
+                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum);
+                }
             }
+        } catch (e: Exception) {
+
         }
     }
 
     fun dotOnClick(view: View) {
-        if (binding.processEdittext.text.toString() != "0") {
-            if (isSecondNum) {
-                if (secondNum != "") {
-                    if (!isHaveDot) {
-                        secondNum = secondNum + "."
+        try {
+            if (binding.processEdittext.text.toString() != "0") {
+                if (isSecondNum) {
+                    if (secondNum != "") {
+                        if (!isHaveDot) {
+                            secondNum = secondNum + "."
+                            isHaveDot = true
+                            binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
+                        }
+                    } else {
+                        secondNum = "0" + "."
                         isHaveDot = true
                         binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
                     }
                 } else {
-                    secondNum = "0" + "."
-                    isHaveDot = true
-                    binding.processEdittext.setText(firstNum + " " + operation + " " + secondNum)
-                }
-            } else {
-                if (firstNum != "") {
-                    if (!isHaveDot) {
-                        firstNum = firstNum + "."
-                        isHaveDot = true
-                        binding.processEdittext.setText(firstNum)
+                    if (firstNum != "") {
+                        if (!isHaveDot) {
+                            firstNum = firstNum + "."
+                            isHaveDot = true
+                            binding.processEdittext.setText(firstNum)
+                        }
                     }
                 }
+            } else {
+                firstNum = "0" + "."
+                isHaveDot = true
+                binding.processEdittext.setText(firstNum)
             }
-        } else {
-            firstNum = "0" + "."
-            isHaveDot = true
-            binding.processEdittext.setText(firstNum)
+        } catch (e: Exception) {
+
         }
     }
 
     fun isDouble(double: Double): String {
-        didItEnd = true
-        resultString = (double.toInt()).toString()
-        if (resultString + ".0" == double.toString()) {
-            return resultString
-        } else {
-            return double.toString()
+        try {
+            didItEnd = true
+            resultString = (double.toInt()).toString()
+            if (resultString + ".0" == double.toString()) {
+                return resultString
+            } else {
+                return double.toString()
+            }
+        } catch (e: Exception) {
+            return "Error"
         }
     }
 
     fun resultOnClick(view: View) {
-        if (!didItEnd) {
-            if (firstNum != "" && secondNum != "") {
-                when (operation) {
-                    '+' -> {
-                        binding.resultEdittext.setText(isDouble((firstNum.toBigDecimal() + secondNum.toBigDecimal()).toDouble()))
-                    }
+        try {
+            if (!didItEnd) {
+                if (firstNum != "" && secondNum != "") {
+                    when (operation) {
+                        '+' -> {
+                            binding.resultEdittext.setText(isDouble((firstNum.toBigDecimal() + secondNum.toBigDecimal()).toDouble()))
+                        }
 
-                    '-' -> {
-                        binding.resultEdittext.setText(isDouble((firstNum.toBigDecimal() - secondNum.toBigDecimal()).toDouble()))
-                    }
+                        '-' -> {
+                            binding.resultEdittext.setText(isDouble((firstNum.toBigDecimal() - secondNum.toBigDecimal()).toDouble()))
+                        }
 
-                    'x' -> {
-                        binding.resultEdittext.setText(isDouble((firstNum.toBigDecimal() * secondNum.toBigDecimal()).toDouble()))
-                    }
+                        'x' -> {
+                            binding.resultEdittext.setText(isDouble((firstNum.toBigDecimal() * secondNum.toBigDecimal()).toDouble()))
+                        }
 
-                    '/' -> {
-                        binding.resultEdittext.setText(isDouble(firstNum.toDouble() / secondNum.toDouble()))
-                    }
-                    '^' -> {
-                        binding.resultEdittext.setText(isDouble(Math.pow(firstNum.toDouble(), secondNum.toDouble())))
+                        '/' -> {
+                            binding.resultEdittext.setText(isDouble(firstNum.toDouble() / secondNum.toDouble()))
+                        }
 
+                        '^' -> {
+                            binding.resultEdittext.setText(isDouble(Math.pow(firstNum.toDouble(), secondNum.toDouble())))
+                        }
+
+                        '_' -> binding.resultEdittext.setText("Error");
                     }
-                    '_' -> binding.resultEdittext.setText("Error");
                 }
             }
-        }
+        } catch (e: Exception) {
 
+        }
     }
 }
